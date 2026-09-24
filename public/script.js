@@ -5,9 +5,10 @@ const message = document.getElementById("message");
 form.addEventListener("submit", async (event) => {
     event.preventDefault();
 
-    const name = document.getElementById("name").value;
-    const course = document.getElementById("course").value;
-    const feedback = document.getElementById("feedback").value;
+    const name = document.getElementById("name").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const course = document.getElementById("course").value.trim();
+    const feedback = document.getElementById("feedback").value.trim();
 
     try {
         const response = await fetch("/api/feedback", {
@@ -17,6 +18,7 @@ form.addEventListener("submit", async (event) => {
             },
             body: JSON.stringify({
                 name,
+                email,
                 course,
                 feedback
             })
@@ -26,14 +28,18 @@ form.addEventListener("submit", async (event) => {
 
         if (response.ok) {
             message.textContent = data.message;
+            message.style.color = "green";
+
             form.reset();
             loadFeedback();
         } else {
             message.textContent = data.message;
+            message.style.color = "red";
         }
 
     } catch (error) {
         message.textContent = "Error submitting feedback.";
+        message.style.color = "red";
     }
 });
 
@@ -49,6 +55,7 @@ async function loadFeedback() {
 
         card.innerHTML = `
             <h3>${item.name}</h3>
+            <strong>Email:</strong> ${item.email}<br>
             <strong>Course:</strong> ${item.course}
             <p>${item.feedback}</p>
         `;
