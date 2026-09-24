@@ -1,0 +1,13 @@
+{
+  "name": "student-feedback-app",
+  "version": "1.0.0",
+  "description": "Student Feedback Web Application",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "node --check server.js"
+  },
+  "dependencies": {
+    "express": "^4.21.2"
+  }
+}
